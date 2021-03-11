@@ -1,4 +1,4 @@
-import {useReducer, useEffect, Dispatch} from 'react'
+import {useReducer, useEffect, useState} from 'react'
 
 import logo from "./logo.svg";
 import "./App.css";
@@ -44,6 +44,7 @@ const Card = ({album}: {album: AlbumType}) => {
     <div className={styles.card}>
       {/* card stuff goes here */}
       <img src={album.thumbnailUrl} />
+      {album.title}
     </div>
   )
 }
@@ -85,6 +86,7 @@ const intitialState: State = {
 
 function App(props: { errorType: string }) {
   const [state, dispatch] = useReducer(reducer, intitialState);
+  const [filterBy, setFilter] = useState('');
   const { errorType } = props;
   const errorMessage = getErrorMessage(messages.email, errorType); ;
   const {albums} = state;
@@ -101,13 +103,19 @@ function App(props: { errorType: string }) {
     })();
   }, []);
 
+  const filteredAlbums = filterBy ? albums.filter(a => a.title.includes(filterBy)) : albums;
+
   return (
     <div className="App">
       errorType: {errorType}
       <br />
       {errorMessage}
       
-      <CardContainer albums={albums} />
+      <br />
+      <br />
+      <input value={filterBy} onChange={e => setFilter(e.target.value)} />
+
+      <CardContainer albums={filteredAlbums} />
     </div>
   );
 }
