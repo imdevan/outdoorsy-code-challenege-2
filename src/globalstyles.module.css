@@ -1,0 +1,21 @@
+.card {
+  max-width: 150px;
+  display: block;
+}
+
+.cardContainer {
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  margin-top: 3rem;
+
+  /* small */
+  @media (min-width: 500px) {
+  background-color: blue;
+  }
+  /* large */
+  @media (min-width: 1200px) {
+  background-color: black;
+  }
+}
